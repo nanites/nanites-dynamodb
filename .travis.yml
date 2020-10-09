@@ -10,7 +10,7 @@ env:
   - PIPENV_IGNORE_VIRTUALENVS=1
 
 # Install Dependencies
-install: make setup
+install: make dev
 
 # Run Tests
 script: make test
