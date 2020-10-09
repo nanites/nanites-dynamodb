@@ -1,0 +1,34 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Creates a persistance layer in DynamoDB
+
+Resources:
+  ConfigTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: config_type
+        AttributeType: S
+      - AttributeName: config_item
+        AttributeType: S
+      - AttributeName: is_active
+        AttributeType: B
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+      - AttibuteName: config_type
+        KeyType: Hash
+      - AttributeName: config_item
+        KeyType: RANGE
+      SSESpecification:
+        SSEEnabled: true
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      ProvisionedThroughput:
+      TableName: nanites-config
+
+Outputs:
+  ConfigurationTable:
+    Description: Holds configuration records for the nanites installation
+    Value: !Ref ConfigTable
+    Export:
+      Name: Nanites-Config-Table
